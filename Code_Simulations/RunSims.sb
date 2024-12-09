@@ -1,0 +1,89 @@
+#!/bin/bash
+#SBATCH --nodes=1 
+#SBATCH --ntasks=1 
+#SBATCH --mem=4GB 
+#SBATCH --time=48:00:00 
+
+module use /storage/icds/RISE/sw8/modules/
+module load r
+module load fftw
+
+# go to current working directory
+cd $SLURM_SUBMIT_DIR
+
+# run C++ code
+g++ -o ibmHiST -std=c++11 IBM_SIR_CorHiST.cpp -lgsl -lgslcblas 
+
+# set population size
+pop_size=1000
+
+# run simulations with heterogeneity in transmission and susceptibility
+for cor_level in -1 -0.5 0 0.5 1
+do
+	for cv_s in 0.5 1 3
+	do
+		for cv_t in 0.5 1 3
+		do
+			for seed in {1..200}
+			do
+				# run R script to generate risks and FoIs for gamma dist with correlation from copulas
+				Rscript GenRisksFoIs_CorHiST_copula.R $pop_size $cv_s $cv_t $cor_level $seed
+
+				# run epidemic
+				time ./ibmHiST -his -cs $cv_s -hit -ct $cv_t -g 0.1 -r 3 -p $pop_size -i 1 -s $seed -in risksFoIs_his${cv_s}_hit${cv_t}_cor${cor_level}_p${pop_size}_seed${seed}.txt -o results_his${cv_s}hit${cv_t}cor${cor_level}g0.1p${pop_size}R03initI1seed${seed}.txt
+			done
+		done
+	done
+done
+
+
+#cor_level=0
+
+# run simulations with homogeneity
+#cv_s=0
+#cv_t=0
+#for seed in {1..200}
+#do
+#	# run R script to generate risks and FoIs for gamma dist with correlation from copulas
+#	Rscript GenRisksFoIs_CorHiST_copula.R $pop_size $cv_s $cv_t $cor_level $seed
+#
+#	# run epidemic
+#	time ./ibmHiST -his -cs $cv_s -hit -ct $cv_t -g 0.1 -r 3 -p $pop_size -i 1 -s $seed -in risksFoIs_his${cv_s}_hit${cv_t}_cor${cor_level}_p${pop_size}_seed${seed}.txt -o results_his${cv_s}hit${cv_t}cor${cor_level}g0.1p${pop_size}R03initI1seed${seed}.txt
+#done
+
+
+# run simulations with heterogeneity in susceptibility only
+#cv_t=0
+#for cv_s in 0.5 1 3
+#do
+#	for seed in {1..200}
+#	do
+#		# run R script to generate risks and FoIs for gamma dist with correlation from copulas
+#		Rscript GenRisksFoIs_CorHiST_copula.R $pop_size $cv_s $cv_t $cor_level $seed
+#
+#		# run epidemic
+#		time ./ibmHiST -his -cs $cv_s -hit -ct $cv_t -g 0.1 -r 3 -p $pop_size -i 1 -s $seed -in risksFoIs_his${cv_s}_hit${cv_t}_cor${cor_level}_p${pop_size}_seed${seed}.txt -o results_his${cv_s}hit${cv_t}cor${cor_level}g0.1p${pop_size}R03initI1seed${seed}.txt
+#	done
+#done
+
+
+# run simulations with heterogeneity in transmission only
+#cv_s=0
+#for cv_t in 0.5 1 3
+#do
+#	for seed in {1..200}
+#	do
+#		# run R script to generate risks and FoIs for gamma dist with correlation from copulas
+#		Rscript GenRisksFoIs_CorHiST_copula.R $pop_size $cv_s $cv_t $cor_level $seed
+#
+#		# run epidemic
+#		time ./ibmHiST -his -cs $cv_s -hit -ct $cv_t -g 0.1 -r 3 -p $pop_size -i 1 -s $seed -in risksFoIs_his${cv_s}_hit${cv_t}_cor${cor_level}_p${pop_size}_seed${seed}.txt -o results_his${cv_s}hit${cv_t}cor${cor_level}g0.1p${pop_size}R03initI1seed${seed}.txt
+#	done
+#done
+
+
+
+echo done
+
+## exit successfully
+exit 0
