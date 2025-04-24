@@ -1,4 +1,4 @@
-The code in this directory was used to simulate data. Below are brief descriptions of the files.
+The code in this directory was used to simulate data for the theoretical model. Code in the Mpox directory was used to simulate data for mpox dynamics. Below are brief descriptions of the files in this directory.
 
 GenRisksFoIs_CorHiST_copula.R generates a risk of being infected and force of infection for each individual in the population with correlations between these parameters set using a normal copula with marginal gamma distributions.
 The output is a file containing the risk and force of infection for each individual.
