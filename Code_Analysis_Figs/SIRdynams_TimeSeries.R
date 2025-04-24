@@ -7,7 +7,7 @@ library(ggplot2)
 library(metR)
 
 # number of simulations
-sims <- 200
+sims <- 500
 
 # population size for each simulation
 pop_size <- 1000
@@ -261,7 +261,7 @@ for(i in 1:7)
 #########################################################################
 ########################## plot dynamics ################################
 #########################################################################
-par(mar=c(5.1,5.1,4.1,2.1)) # change margin sizes
+par(mar=c(5.1,5.1,4.1,2.1), mgp=c(3,1,0)) # change margin sizes
 
 ###################### plot I over time #################################
 # 8.8" width x 6.7" height
@@ -455,6 +455,10 @@ boot_size <- 100
 # take prob of major outbreaks dataframe from HeatMap_CompProbPeakSizeTimeFES_CorHiST.R
 probs_majorouts <- data_R3_probout
 probs_majorouts_hom <- data_R3_hom_probout
+
+# if value is NA, had been 0 and changed for prob plot
+probs_majorouts$major_out <- ifelse(is.na(probs_majorouts$major_out),0,probs_majorouts$major_out)
+probs_majorouts_hom$major_out <- ifelse(is.na(probs_majorouts_hom$major_out),0,probs_majorouts_hom$major_out)
 
 # make empty dataframe to store this data 
 bootstrap_probmajout <- data.frame(cv_s = double(), 

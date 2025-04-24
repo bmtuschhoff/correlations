@@ -10,7 +10,7 @@ library(egg)
 library(cowplot)
 
 # number of simulations
-sims <- 200
+sims <- 500
 
 # set working directory to get data from
 setwd("C:/Users/bmt5507/Documents/Cor_HiST_Copula_I1_R0.8")
@@ -279,7 +279,7 @@ par(mai = c(0.55, 0.6, 0.1, 0.075))
 
 # HiT=3
 plot(all_timestojthinf$'0.5_3_-1'$median, all_timestojthinf$'0.5_3_-1'$jinf, type="l", col="red", lty="solid", 
-     xlab="", ylab="Number of infections", xlim=c(0,200), ylim=c(0,1000), cex.axis=1.3, cex.lab=1.5, lwd=2)
+     xlab="", ylab="Number of infections", xlim=c(0,250), ylim=c(0,500), cex.axis=1.3, cex.lab=1.5, lwd=2)
 #polygon(c(rev(all_timestojthinf$'0.5_3_-1'$median), all_timestojthinf$'0.5_3_-1'$median), c(rev(all_timestojthinf$'0.5_3_-1'$low), all_timestojthinf$'0.5_3_-1'$high),
 #        col=adjustcolor("red", alpha.f=0.2) , lty = 0)
 lines(all_timestojthinf$'0.5_3_0'$median, all_timestojthinf$'0.5_3_0'$jinf, type="l", col="yellow3", lty="solid", lwd=2)
@@ -293,7 +293,7 @@ lines(all_timestojthinf$'0_3'$median, all_timestojthinf$'0_3'$jinf, type="l", co
 lines(all_timestojthinf$'0.5_0'$median, all_timestojthinf$'0.5_0'$jinf, type="l", col="orchid", lwd=2)
 
 plot(all_timestojthinf$'1_3_-1'$median, all_timestojthinf$'1_3_-1'$jinf, type="l", col="red", lty="solid", 
-     xlab="", ylab="", xlim=c(0,200), ylim=c(0,1000), cex.axis=1.3, cex.lab=1.5, lwd=2)
+     xlab="", ylab="", xlim=c(0,250), ylim=c(0,500), cex.axis=1.3, cex.lab=1.5, lwd=2)
 #polygon(c(rev(all_timestojthinf$'1_3_-1'$median), all_timestojthinf$'1_3_-1'$median), c(rev(all_timestojthinf$'1_3_-1'$low), all_timestojthinf$'1_3_-1'$high),
 #        col=adjustcolor("red", alpha.f=0.2) , lty = 0)
 lines(all_timestojthinf$'1_3_0'$median, all_timestojthinf$'1_3_0'$jinf, type="l", col="yellow3", lty="solid", lwd=2)
@@ -307,7 +307,7 @@ lines(all_timestojthinf$'0_3'$median, all_timestojthinf$'0_3'$jinf, type="l", co
 lines(all_timestojthinf$'1_0'$median, all_timestojthinf$'1_0'$jinf, type="l", col="orchid", lwd=2)
 
 plot(all_timestojthinf$'3_3_-1'$median, all_timestojthinf$'3_3_-1'$jinf, type="l", col="red", 
-     xlab="Time", ylab="", xlim=c(0,200), ylim=c(0,1000), cex.axis=1.3, cex.lab=1.5, lwd=2)
+     xlab="Time", ylab="", xlim=c(0,250), ylim=c(0,500), cex.axis=1.3, cex.lab=1.5, lwd=2)
 #polygon(c(rev(all_timestojthinf$'3_3_-1'$median), all_timestojthinf$'3_3_-1'$median), c(rev(all_timestojthinf$'3_3_-1'$low), all_timestojthinf$'3_3_-1'$high),
 #        col=adjustcolor("red", alpha.f=0.2) , lty = 0)
 lines(all_timestojthinf$'3_3_0'$median, all_timestojthinf$'3_3_0'$jinf, type="l", col="yellow3", lwd=2)
@@ -323,7 +323,7 @@ lines(all_timestojthinf$'3_0'$median, all_timestojthinf$'3_0'$jinf, type="l", co
 
 # HiT=1
 plot(all_timestojthinf$'0.5_1_-1'$median, all_timestojthinf$'0.5_1_-1'$jinf, type="l", col="red", lty="solid", 
-     xlab="", ylab="Number of infections", xlim=c(0,200), ylim=c(0,1000), cex.axis=1.3, cex.lab=1.5, lwd=2)
+     xlab="", ylab="Number of infections", xlim=c(0,250), ylim=c(0,500), cex.axis=1.3, cex.lab=1.5, lwd=2)
 #polygon(c(rev(all_timestojthinf$'0.5_1_-1'$median), all_timestojthinf$'0.5_1_-1'$median), c(rev(all_timestojthinf$'0.5_1_-1'$low), all_timestojthinf$'0.5_1_-1'$high),
 #        col=adjustcolor("red", alpha.f=0.2) , lty = 0)
 lines(all_timestojthinf$'0.5_1_0'$median, all_timestojthinf$'0.5_1_0'$jinf, type="l", col="yellow3", lty="solid", lwd=2)
@@ -337,7 +337,7 @@ lines(all_timestojthinf$'0_1'$median, all_timestojthinf$'0_1'$jinf, type="l", co
 lines(all_timestojthinf$'0.5_0'$median, all_timestojthinf$'0.5_0'$jinf, type="l", col="orchid", lwd=2)
 
 plot(all_timestojthinf$'1_1_-1'$median, all_timestojthinf$'1_1_-1'$jinf, type="l", col="red", lty="solid", 
-     xlab="", ylab="", xlim=c(0,200), ylim=c(0,1000), cex.axis=1.3, cex.lab=1.5, lwd=2)
+     xlab="", ylab="", xlim=c(0,250), ylim=c(0,500), cex.axis=1.3, cex.lab=1.5, lwd=2)
 #polygon(c(rev(all_timestojthinf$'1_1_-1'$median), all_timestojthinf$'1_1_-1'$median), c(rev(all_timestojthinf$'1_1_-1'$low), all_timestojthinf$'1_1_-1'$high),
 #        col=adjustcolor("red", alpha.f=0.2) , lty = 0)
 #lines(all_timestojthinf$'1_1_-0.5'$median, all_timestojthinf$'1_1_-0.5'$jinf, type="l", col="red", lty="solid", lwd=2)
@@ -352,7 +352,7 @@ lines(all_timestojthinf$'0_1'$median, all_timestojthinf$'0_1'$jinf, type="l", co
 lines(all_timestojthinf$'1_0'$median, all_timestojthinf$'1_0'$jinf, type="l", col="orchid", lwd=2)
 
 plot(all_timestojthinf$'3_1_-1'$median, all_timestojthinf$'3_1_-1'$jinf, type="l", col="red", 
-     xlab="Time", ylab="", xlim=c(0,200), ylim=c(0,1000), cex.axis=1.3, cex.lab=1.5, lwd=2)
+     xlab="Time", ylab="", xlim=c(0,250), ylim=c(0,500), cex.axis=1.3, cex.lab=1.5, lwd=2)
 #polygon(c(rev(all_timestojthinf$'3_1_-1'$median), all_timestojthinf$'3_1_-1'$median), c(rev(all_timestojthinf$'3_1_-1'$low), all_timestojthinf$'3_1_-1'$high),
 #        col=adjustcolor("red", alpha.f=0.2) , lty = 0)
 lines(all_timestojthinf$'3_1_0'$median, all_timestojthinf$'3_1_0'$jinf, type="l", col="yellow3", lty="solid", lwd=2)
@@ -368,7 +368,7 @@ lines(all_timestojthinf$'3_0'$median, all_timestojthinf$'3_0'$jinf, type="l", co
 
 # HiT=0.5
 plot(all_timestojthinf$'0.5_0.5_-1'$median, all_timestojthinf$'0.5_0.5_-1'$jinf, type="l", col="red", 
-     xlab="Time", ylab="Number of infections", xlim=c(0,200), ylim=c(0,1000), cex.axis=1.3, cex.lab=1.5, lwd=2)
+     xlab="Time", ylab="Number of infections", xlim=c(0,250), ylim=c(0,500), cex.axis=1.3, cex.lab=1.5, lwd=2)
 #polygon(c(rev(all_timestojthinf$'0.5_0.5_-1'$median), all_timestojthinf$'0.5_0.5_-1'$median), c(rev(all_timestojthinf$'0.5_0.5_-1'$low), all_timestojthinf$'0.5_0.5_-1'$high),
 #        col=adjustcolor("red", alpha.f=0.2) , lty = 0)
 lines(all_timestojthinf$'0.5_0.5_0'$median, all_timestojthinf$'0.5_0.5_0'$jinf, type="l", col="yellow3", lwd=2)
@@ -382,7 +382,7 @@ lines(all_timestojthinf$'0_0.5'$median, all_timestojthinf$'0_0.5'$jinf, type="l"
 lines(all_timestojthinf$'0.5_0'$median, all_timestojthinf$'0.5_0'$jinf, type="l", col="orchid", lwd=2)
 
 plot(all_timestojthinf$'1_0.5_-1'$median, all_timestojthinf$'1_0.5_-1'$jinf, type="l", col="red", lty="solid", 
-     xlab="Time", ylab="", xlim=c(0,200), ylim=c(0,1000), cex.axis=1.3, cex.lab=1.5, lwd=2)
+     xlab="Time", ylab="", xlim=c(0,250), ylim=c(0,500), cex.axis=1.3, cex.lab=1.5, lwd=2)
 #polygon(c(rev(all_timestojthinf$'1_0.5_-1'$median), all_timestojthinf$'1_0.5_-1'$median), c(rev(all_timestojthinf$'1_0.5_-1'$low), all_timestojthinf$'1_0.5_-1'$high),
 #        col=adjustcolor("red", alpha.f=0.2) , lty = 0)
 lines(all_timestojthinf$'1_0.5_0'$median, all_timestojthinf$'1_0.5_0'$jinf, type="l", col="yellow3", lty="solid", lwd=2)
@@ -396,7 +396,7 @@ lines(all_timestojthinf$'0_0.5'$median, all_timestojthinf$'0_0.5'$jinf, type="l"
 lines(all_timestojthinf$'1_0'$median, all_timestojthinf$'1_0'$jinf, type="l", col="orchid", lwd=2)
 
 plot(all_timestojthinf$'3_0.5_-1'$median, all_timestojthinf$'3_0.5_-1'$jinf, type="l", col="red", lty="solid", 
-     xlab="Time", ylab="", xlim=c(0,200), ylim=c(0,1000), cex.axis=1.3, cex.lab=1.5, lwd=2)
+     xlab="Time", ylab="", xlim=c(0,250), ylim=c(0,500), cex.axis=1.3, cex.lab=1.5, lwd=2)
 #polygon(c(rev(all_timestojthinf$'3_0.5_-1'$median), all_timestojthinf$'3_0.5_-1'$median), c(rev(all_timestojthinf$'3_0.5_-1'$low), all_timestojthinf$'3_0.5_-1'$high),
 #        col=adjustcolor("red", alpha.f=0.2) , lty = 0)
 lines(all_timestojthinf$'3_0.5_0'$median, all_timestojthinf$'3_0.5_0'$jinf, type="l", col="yellow3", lty="solid", lwd=2)
@@ -556,7 +556,7 @@ par(mai = c(0.55, 0.6, 0.07, 0.075))
 
 # HiT=3
 plot(all_Sseries$'0_0'$avg, all_Reffs$'0_0'$avg, type="l", col="black",lwd=2,
-     xlab="", ylab=expression(paste(italic(R)[italic(e)])), xlim=c(1000,0), ylim=c(0,10), cex.axis=1.3, cex.lab=1.5)
+     xlab="", ylab=expression(paste(italic(R)[italic(e)])), xlim=c(1000,500), ylim=c(0,7), cex.axis=1.3, cex.lab=1.5)
 #polygon(c(rev(all_Sseries$'0_0'$avg), all_Sseries$'0_0'$avg), c(rev(all_Reffs$'0_0'$low), all_Reffs$'0_0'$high),
 #        col=adjustcolor("black", alpha.f=0.2) , lty = 0)
 text(all_Sseries$'0_0'$avg[seq(1,max(all_Sseries$'0_0'$time/0.1),100)], all_Reffs$'0_0'$avg[seq(1,max(all_Reffs$'0_0'$time/0.1),100)], labels=all_Reffs$'0_0'$time[seq(1,max(all_Reffs$'0_0'$time/0.1),100)]/10, col="black", cex=2)
@@ -583,7 +583,7 @@ text(all_Sseries$'0.5_3_1'$avg[seq(1,max(all_Sseries$'0.5_3_1'$time/0.1),100)], 
 abline(h=1, col="gray45", lty="dashed")
 
 plot(all_Sseries$'0_0'$avg, all_Reffs$'0_0'$avg, type="l", col="black",lwd=2,
-     xlab="", ylab="", xlim=c(1000,0), ylim=c(0,10), cex.axis=1.3, cex.lab=1.5)
+     xlab="", ylab="", xlim=c(1000,500), ylim=c(0,7), cex.axis=1.3, cex.lab=1.5)
 #polygon(c(rev(all_Sseries$'0_0'$avg), all_Sseries$'0_0'$avg), c(rev(all_Reffs$'0_0'$low), all_Reffs$'0_0'$high),
 #        col=adjustcolor("black", alpha.f=0.2) , lty = 0)
 text(all_Sseries$'0_0'$avg[seq(1,max(all_Sseries$'0_0'$time/0.1),100)], all_Reffs$'0_0'$avg[seq(1,max(all_Reffs$'0_0'$time/0.1),100)], labels=all_Reffs$'0_0'$time[seq(1,max(all_Reffs$'0_0'$time/0.1),100)]/10, col="black", cex=2)
@@ -610,7 +610,8 @@ text(all_Sseries$'1_3_1'$avg[seq(1,max(all_Sseries$'1_3_1'$time/0.1),100)], all_
 abline(h=1, col="gray75", lty="dashed")
 
 plot(all_Sseries$'0_0'$avg, all_Reffs$'0_0'$avg, type="l", col="black",lwd=2,
-     xlab="", ylab="", xlim=c(1000,0), ylim=c(0,10), cex.axis=1.3, cex.lab=1.5)
+     #xlab="", ylab="", xlim=c(1000,500), ylim=c(0,7), cex.axis=1.3, cex.lab=1.5)
+    xlab="Number of susceptible individuals", ylab=expression(paste(italic(R)[italic(e)])), xlim=c(1000,500), ylim=c(0,7), cex.axis=2, cex.lab=2)
 #polygon(c(rev(all_Sseries$'0_0'$avg), all_Sseries$'0_0'$avg), c(rev(all_Reffs$'0_0'$low), all_Reffs$'0_0'$high),
 #        col=adjustcolor("black", alpha.f=0.2) , lty = 0)
 text(all_Sseries$'0_0'$avg[seq(1,max(all_Sseries$'0_0'$time/0.1),100)], all_Reffs$'0_0'$avg[seq(1,max(all_Reffs$'0_0'$time/0.1),100)], labels=all_Reffs$'0_0'$time[seq(1,max(all_Reffs$'0_0'$time/0.1),100)]/10, col="black", cex=2)
@@ -640,7 +641,7 @@ abline(h=1, col="gray75", lty="dashed")
 
 # HiT=1
 plot(all_Sseries$'0_0'$avg, all_Reffs$'0_0'$avg, type="l", col="black",lwd=2,
-     xlab="", ylab=expression(paste(italic(R)[italic(e)])), xlim=c(1000,0), ylim=c(0,10), cex.axis=1.3, cex.lab=1.5)
+     xlab="", ylab=expression(paste(italic(R)[italic(e)])), xlim=c(1000,500), ylim=c(0,7), cex.axis=1.3, cex.lab=1.5)
 #polygon(c(rev(all_Sseries$'0_0'$avg), all_Sseries$'0_0'$avg), c(rev(all_Reffs$'0_0'$low), all_Reffs$'0_0'$high),
 #        col=adjustcolor("black", alpha.f=0.2) , lty = 0)
 text(all_Sseries$'0_0'$avg[seq(1,max(all_Sseries$'0_0'$time/0.1),100)], all_Reffs$'0_0'$avg[seq(1,max(all_Reffs$'0_0'$time/0.1),100)], labels=all_Reffs$'0_0'$time[seq(1,max(all_Reffs$'0_0'$time/0.1),100)]/10, col="black", cex=2)
@@ -667,7 +668,7 @@ text(all_Sseries$'0.5_1_1'$avg[seq(1,max(all_Sseries$'0.5_1_1'$time/0.1),100)], 
 abline(h=1, col="gray75", lty="dashed")
 
 plot(all_Sseries$'0_0'$avg, all_Reffs$'0_0'$avg, type="l", col="black",lwd=2,
-     xlab="", ylab="", xlim=c(1000,0), ylim=c(0,10), cex.axis=1.3, cex.lab=1.5)
+     xlab="", ylab="", xlim=c(1000,500), ylim=c(0,7), cex.axis=1.3, cex.lab=1.5)
 #polygon(c(rev(all_Sseries$'0_0'$avg), all_Sseries$'0_0'$avg), c(rev(all_Reffs$'0_0'$low), all_Reffs$'0_0'$high),
 #        col=adjustcolor("black", alpha.f=0.2) , lty = 0)
 text(all_Sseries$'0_0'$avg[seq(1,max(all_Sseries$'0_0'$time/0.1),100)], all_Reffs$'0_0'$avg[seq(1,max(all_Reffs$'0_0'$time/0.1),100)], labels=all_Reffs$'0_0'$time[seq(1,max(all_Reffs$'0_0'$time/0.1),100)]/10, col="black", cex=2)
@@ -694,7 +695,7 @@ text(all_Sseries$'1_1_1'$avg[seq(1,max(all_Sseries$'1_1_1'$time/0.1),100)], all_
 abline(h=1, col="gray75", lty="dashed")
 
 plot(all_Sseries$'0_0'$avg, all_Reffs$'0_0'$avg, type="l", col="black",lwd=2,
-     xlab="", ylab="", xlim=c(1000,0), ylim=c(0,10), cex.axis=1.3, cex.lab=1.5)
+     xlab="", ylab="", xlim=c(1000,500), ylim=c(0,7), cex.axis=1.3, cex.lab=1.5)
 #polygon(c(rev(all_Sseries$'0_0'$avg), all_Sseries$'0_0'$avg), c(rev(all_Reffs$'0_0'$low), all_Reffs$'0_0'$high),
 #        col=adjustcolor("black", alpha.f=0.2) , lty = 0)
 #text(all_Sseries$'0_0'$avg[seq(1,max(all_Sseries$'0_0'$time/0.1),100)], all_Reffs$'0_0'$avg[seq(1,max(all_Reffs$'0_0'$time/0.1),100)], col="black", cex=2)
@@ -724,7 +725,7 @@ abline(h=1, col="gray75", lty="dashed")
 
 # HiT=0.5
 plot(all_Sseries$'0_0'$avg, all_Reffs$'0_0'$avg, type="l", col="black",lwd=2,
-     xlab="Number of susceptible individuals", ylab=expression(paste(italic(R)[italic(e)])), xlim=c(1000,0), ylim=c(0,10), cex.axis=1.3, cex.lab=1.5)
+     xlab="Number of susceptible individuals", ylab=expression(paste(italic(R)[italic(e)])), xlim=c(1000,500), ylim=c(0,7), cex.axis=1.3, cex.lab=1.5)
 #polygon(c(rev(all_Sseries$'0_0'$avg), all_Sseries$'0_0'$avg), c(rev(all_Reffs$'0_0'$low), all_Reffs$'0_0'$high),
 #        col=adjustcolor("black", alpha.f=0.2) , lty = 0)
 text(all_Sseries$'0_0'$avg[seq(1,max(all_Sseries$'0_0'$time/0.1),100)], all_Reffs$'0_0'$avg[seq(1,max(all_Reffs$'0_0'$time/0.1),100)], labels=all_Reffs$'0_0'$time[seq(1,max(all_Reffs$'0_0'$time/0.1),100)]/10, col="black", cex=2)
@@ -751,7 +752,7 @@ text(all_Sseries$'0.5_0.5_1'$avg[seq(1,max(all_Sseries$'0.5_0.5_1'$time/0.1),100
 abline(h=1, col="gray75", lty="dashed")
 
 plot(all_Sseries$'0_0'$avg, all_Reffs$'0_0'$avg, type="l", col="black",lwd=2,
-     xlab="Number of susceptible individuals", ylab="", xlim=c(1000,0), ylim=c(0,10), cex.axis=1.3, cex.lab=1.5)
+     xlab="Number of susceptible individuals", ylab="", xlim=c(1000,500), ylim=c(0,7), cex.axis=1.3, cex.lab=1.5)
 #polygon(c(rev(all_Sseries$'0_0'$avg), all_Sseries$'0_0'$avg), c(rev(all_Reffs$'0_0'$low), all_Reffs$'0_0'$high),
 #        col=adjustcolor("black", alpha.f=0.2) , lty = 0)
 text(all_Sseries$'0_0'$avg[seq(1,max(all_Sseries$'0_0'$time/0.1),100)], all_Reffs$'0_0'$avg[seq(1,max(all_Reffs$'0_0'$time/0.1),100)], labels=all_Reffs$'0_0'$time[seq(1,max(all_Reffs$'0_0'$time/0.1),100)]/10, col="black", cex=2)
@@ -778,7 +779,7 @@ text(all_Sseries$'1_0.5_1'$avg[seq(1,max(all_Sseries$'1_0.5_1'$time/0.1),100)], 
 abline(h=1, col="gray75", lty="dashed")
 
 plot(all_Sseries$'0_0'$avg, all_Reffs$'0_0'$avg, type="l", col="black",lwd=2,
-     xlab="Number of susceptible individuals", ylab="", xlim=c(1000,0), ylim=c(0,10), cex.axis=1.3, cex.lab=1.5)
+     xlab="Number of susceptible individuals", ylab="", xlim=c(1000,500), ylim=c(0,7), cex.axis=1.3, cex.lab=1.5)
 #polygon(c(rev(all_Sseries$'0_0'$avg), all_Sseries$'0_0'$avg), c(rev(all_Reffs$'0_0'$low), all_Reffs$'0_0'$high),
 #        col=adjustcolor("black", alpha.f=0.2) , lty = 0)
 text(all_Sseries$'0_0'$avg[seq(1,max(all_Sseries$'0_0'$time/0.1),100)], all_Reffs$'0_0'$avg[seq(1,max(all_Reffs$'0_0'$time/0.1),100)], labels=all_Reffs$'0_0'$time[seq(1,max(all_Reffs$'0_0'$time/0.1),100)]/10, col="black", cex=2)
@@ -872,7 +873,7 @@ time50thinf$cor <- factor(time50thinf$cor, levels = c(-1,-0.5,0,0.5,1))
 timej_corn1 <- ggplot(time50thinf[which(time50thinf$cor == -1),], aes(x=cv_s, y=cv_t, fill=time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(10,122),  breaks=seq(10,122,8),  # R0=0.8
+  scale_fill_steps(low="white", high="red", limits=c(9,93),  breaks=seq(9,93,7),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -893,7 +894,7 @@ timej_corn1 <- set_panel_size( timej_corn1, height=unit(3*2, "cm"),
 timej_corn0.5 <- ggplot(time50thinf[which(time50thinf$cor == -0.5),], aes(x=cv_s, y=cv_t, fill=time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(10,122),  breaks=seq(10,122,8),  # R0=0.8
+  scale_fill_steps(low="white", high="red", limits=c(9,93),  breaks=seq(9,93,7),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -914,7 +915,7 @@ timej_corn0.5 <- set_panel_size( timej_corn0.5, height=unit(3*2, "cm"),
 timej_cor0 <- ggplot(time50thinf[which(time50thinf$cor == 0 & time50thinf$cv_s != 0 & time50thinf$cv_t != 0),], aes(x=cv_s, y=cv_t, fill=time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(10,122),  breaks=seq(10,122,8),  # R0=0.8
+  scale_fill_steps(low="white", high="red", limits=c(9,93),  breaks=seq(9,93,7),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -935,7 +936,7 @@ timej_cor0 <- set_panel_size( timej_cor0, height=unit(3*2, "cm"),
 timej_cor0.5 <- ggplot(time50thinf[which(time50thinf$cor == 0.5),], aes(x=cv_s, y=cv_t, fill=time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(10,122),  breaks=seq(10,122,8),  # R0=0.8
+  scale_fill_steps(low="white", high="red", limits=c(9,93),  breaks=seq(9,93,7),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -956,7 +957,7 @@ timej_cor0.5 <- set_panel_size( timej_cor0.5, height=unit(3*2, "cm"),
 timej_cor1 <- ggplot(time50thinf[which(time50thinf$cor == 1),], aes(x=cv_s, y=cv_t, fill=time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(10,122),  breaks=seq(10,122,8),  # R0=0.8
+  scale_fill_steps(low="white", high="red", limits=c(9,93),  breaks=seq(9,93,7),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -977,7 +978,7 @@ timej_cor1 <- set_panel_size( timej_cor1, height=unit(3*2, "cm"),
 timej_cs0 <- ggplot(time50thinf[which(time50thinf$cv_s == 0 & time50thinf$cv_t != 0),], aes(x=cor, y=cv_t, fill=time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(10,122),  breaks=seq(10,122,8),  # R0=0.8
+  scale_fill_steps(low="white", high="red", limits=c(9,93),  breaks=seq(9,93,7),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -998,7 +999,7 @@ timej_cs0 <- set_panel_size( timej_cs0, height=unit(3*2, "cm"),
 timej_cs0ct0 <- ggplot(time50thinf[which(time50thinf$cv_s == 0 & time50thinf$cv_t == 0),], aes(x=cor, y=cv_t, fill=time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(10,122),  breaks=seq(10,122,8),  # R0=0.8
+  scale_fill_steps(low="white", high="red", limits=c(9,93),  breaks=seq(9,93,7),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -1020,7 +1021,7 @@ timej_cs0ct0 <- set_panel_size( timej_cs0ct0, height=unit(1*2, "cm"),
 timej_ct0 <- ggplot(time50thinf[which(time50thinf$cv_s != 0 & time50thinf$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(10,122),  breaks=seq(10,122,8),  # R0=0.8
+  scale_fill_steps(low="white", high="red", limits=c(9,93),  breaks=seq(9,93,7),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -1043,9 +1044,9 @@ timej_ct0 <- set_panel_size( timej_ct0, height=unit(1*2, "cm"),
 timej_leg <- ggplot(time50thinf[which(time50thinf$cor == "0"),], aes(x=cv_t, y=cv_s, fill=time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  #scale_fill_steps(low="white", high="red", limits=c(4,67),  breaks=seq(4,67,7),  # R0=3
-  scale_fill_steps(low="white", high="red", limits=c(10,122),  breaks=seq(10,122,8),  # R0=0.8
-  #scale_fill_steps(low="white", high="red", limits=c(9,84),  breaks=seq(9,84,5),  # R0=1.1
+  #scale_fill_steps(low="white", high="red", limits=c(4,64),  breaks=seq(4,64,6),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(9,93),  breaks=seq(9,93,7),  # R0=0.8
+  #scale_fill_steps(low="white", high="red", limits=c(7,103),  breaks=seq(7,103,8),  # R0=1.1
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40")) +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +

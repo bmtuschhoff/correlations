@@ -10,13 +10,13 @@ library(egg)
 library(cowplot)
 
 # number of simulations
-sims <- 200
+sims <- 500
 
 # population size for each simulation
 pop_size <- 1000
 
 # set working directory to get data from
-setwd("C:/Users/bmt5507/Documents/Cor_HiST_Copula_I1")
+setwd("C:/Users/bmt5507/Documents/Cor_HiST_Copula_I1_R0.8")
 
 # function to read in datasets that are tab delimited
 read_sav <- function(fileName) {read.table(fileName, header=T, sep="\t")}
@@ -102,7 +102,7 @@ for(cv_s in cv_ss)
     for(corr in cors)
     {
       # list of file names
-      filePattern <- paste("results_his",cv_s,"hit",cv_t,"cor",corr,"g0.1p1000R03initI1s*", sep="")
+      filePattern <- paste("results_his",cv_s,"hit",cv_t,"cor",corr,"g0.1p1000R00.8initI1s*", sep="")
       files <- list.files(pattern=filePattern)
       
       # make a list that contains all files
@@ -116,7 +116,7 @@ for(cv_s in cv_ss)
       colnames(temp) <- c("cv_s", "cv_t", "cor", "sim", "timeto20", "timeto50", "timeto75", "major_out")
       
       # add correct simulation numbers
-      temp$sim <- seq(1,200,1)
+      temp$sim <- seq(1,500,1)
       
       # remove all sims with NA values
       temp <- na.omit(temp)
@@ -132,13 +132,13 @@ for(cv_s in cv_ss)
 ## separately get data for homogeneous case (HiS=0, HiT=0) and cases with just HiS or just HiT
 # list of file names
 filePatterns <- c()
-filePatterns[1] <- paste("results_his0hit0cor0g0.1p1000R03initI1s*", sep="")
-filePatterns[2] <- paste("results_his0.5hit0cor0g0.1p1000R03initI1s*", sep="")
-filePatterns[3] <- paste("results_his1hit0cor0g0.1p1000R03initI1s*", sep="")
-filePatterns[4] <- paste("results_his3hit0cor0g0.1p1000R03initI1s*", sep="")
-filePatterns[5] <- paste("results_his0hit0.5cor0g0.1p1000R03initI1s*", sep="")
-filePatterns[6] <- paste("results_his0hit1cor0g0.1p1000R03initI1s*", sep="")
-filePatterns[7] <- paste("results_his0hit3cor0g0.1p1000R03initI1s*", sep="")
+filePatterns[1] <- paste("results_his0hit0cor0g0.1p1000R00.8initI1s*", sep="")
+filePatterns[2] <- paste("results_his0.5hit0cor0g0.1p1000R00.8initI1s*", sep="")
+filePatterns[3] <- paste("results_his1hit0cor0g0.1p1000R00.8initI1s*", sep="")
+filePatterns[4] <- paste("results_his3hit0cor0g0.1p1000R00.8initI1s*", sep="")
+filePatterns[5] <- paste("results_his0hit0.5cor0g0.1p1000R00.8initI1s*", sep="")
+filePatterns[6] <- paste("results_his0hit1cor0g0.1p1000R00.8initI1s*", sep="")
+filePatterns[7] <- paste("results_his0hit3cor0g0.1p1000R00.8initI1s*", sep="")
 
 # levels of heterogeneity in transmission and susceptibility
 cv_ss <- c(0,0.5,1,3,0,0,0)
@@ -171,7 +171,7 @@ for(i in 1:7)
   colnames(temp) <- c("cv_s", "cv_t", "cor", "sim", "timeto20", "timeto50", "timeto75", "major_out")
   
   # add correct simulation numbers
-  temp$sim <- seq(1,200,1)
+  temp$sim <- seq(1,500,1)
   
   # remove all sims with NA values
   temp <- na.omit(temp)
@@ -237,7 +237,7 @@ timetoX_R3_hom_mean$cor <- factor(timetoX_R3_hom_mean$cor, levels = c(-1,-0.5,0,
 timetoX_corn1 <- ggplot(timetoX_R3_mean[which(timetoX_R3_mean$cor == -1),], aes(x=cv_s, y=cv_t, fill=timeto50)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(13,101),  breaks=seq(13,101,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -258,7 +258,7 @@ timetoX_corn1 <- set_panel_size( timetoX_corn1, height=unit(3*2, "cm"),
 timetoX_corn0.5 <- ggplot(timetoX_R3_mean[which(timetoX_R3_mean$cor == -0.5),], aes(x=cv_s, y=cv_t, fill=timeto50)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(13,101),  breaks=seq(13,101,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -279,7 +279,7 @@ timetoX_corn0.5 <- set_panel_size( timetoX_corn0.5, height=unit(3*2, "cm"),
 timetoX_cor0 <- ggplot(timetoX_R3_mean[which(timetoX_R3_mean$cor == 0 & timetoX_R3_mean$cv_s != 0 & timetoX_R3_mean$cv_t != 0),], aes(x=cv_s, y=cv_t, fill=timeto50)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(13,101),  breaks=seq(13,101,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -300,7 +300,7 @@ timetoX_cor0 <- set_panel_size( timetoX_cor0, height=unit(3*2, "cm"),
 timetoX_cor0.5 <- ggplot(timetoX_R3_mean[which(timetoX_R3_mean$cor == 0.5),], aes(x=cv_s, y=cv_t, fill=timeto50)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(13,101),  breaks=seq(13,101,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -321,7 +321,7 @@ timetoX_cor0.5 <- set_panel_size( timetoX_cor0.5, height=unit(3*2, "cm"),
 timetoX_cor1 <- ggplot(timetoX_R3_mean[which(timetoX_R3_mean$cor == 1),], aes(x=cv_s, y=cv_t, fill=timeto50)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(13,101),  breaks=seq(13,101,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -342,7 +342,7 @@ timetoX_cor1 <- set_panel_size( timetoX_cor1, height=unit(3*2, "cm"),
 timetoX_cs0 <- ggplot(timetoX_R3_hom_mean[which(timetoX_R3_hom_mean$cv_s == 0 & timetoX_R3_hom_mean$cv_t != 0),], aes(x=cor, y=cv_t, fill=timeto50)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(13,101),  breaks=seq(13,101,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -363,7 +363,7 @@ timetoX_cs0 <- set_panel_size( timetoX_cs0, height=unit(3*2, "cm"),
 timetoX_cs0ct0 <- ggplot(timetoX_R3_hom_mean[which(timetoX_R3_hom_mean$cv_s == 0 & timetoX_R3_hom_mean$cv_t == 0),], aes(x=cor, y=cv_t, fill=timeto50)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(13,101),  breaks=seq(13,101,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -385,7 +385,7 @@ timetoX_cs0ct0 <- set_panel_size( timetoX_cs0ct0, height=unit(1*2, "cm"),
 timetoX_ct0 <- ggplot(timetoX_R3_hom_mean[which(timetoX_R3_hom_mean$cv_s != 0 & timetoX_R3_hom_mean$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=timeto50)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(13,101),  breaks=seq(13,101,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -408,9 +408,9 @@ timetoX_ct0 <- set_panel_size( timetoX_ct0, height=unit(1*2, "cm"),
 timetoX_leg <- ggplot(timetoX_R3_mean[which(timetoX_R3_mean$cor == 0),], aes(x=cv_t, y=cv_s, fill=timeto50)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
-  #scale_fill_steps(low="white", high="red", limits=c(13,104),  breaks=seq(13,104,7),  # R0=0.8
-  #scale_fill_steps(low="white", high="red", limits=c(11,99),  breaks=seq(11,99,8),  # R0=1.1
+  #scale_fill_steps(low="white", high="red", limits=c(6,70),  breaks=seq(6,70,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(13,101),  breaks=seq(13,101,8),  # R0=0.8
+  #scale_fill_steps(low="white", high="red", limits=c(11,137),  breaks=seq(11,137,14),  # R0=1.1
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -431,6 +431,7 @@ plt <- plot_grid(timetoX_cs0, timetoX_corn1, timetoX_corn0.5, timetoX_cor0, time
                  NULL, NULL, NULL, NULL, NULL, NULL,
                  timetoX_cs0ct0, NULL, NULL, timetoX_ct0, NULL, NULL,
                  nrow=3, ncol=6, rel_heights=c(1,-0.5,1), rel_widths=c(0.4,1,1,1,1,1))
+
 plot_grid(plt, legend,
           nrow=1, rel_widths=c(1,0.2))
 # size: 19 x 7.5

@@ -9,10 +9,10 @@ library(egg)
 library(cowplot)
 
 # number of simulations
-sims <- 200
+sims <- 500
 
 # set working directory to get data from
-setwd("C:/Users/bmt5507/Documents/Cor_HiST_Copula_I1_R1.1")
+setwd("C:/Users/bmt5507/Documents/Cor_HiST_Copula_I1")
 
 # function to read in datasets that are tab delimited
 read_sav <- function(fileName) {read.table(fileName, header=T, sep="\t")}
@@ -67,7 +67,7 @@ for(cv_s in cv_ss)
     for(corr in cors)
     {
       # list of file names
-      filePattern <- paste("results_his",cv_s,"hit",cv_t,"cor",corr,"g0.1p1000R01.1initI1s*", sep="")
+      filePattern <- paste("results_his",cv_s,"hit",cv_t,"cor",corr,"g0.1p1000R03initI1s*", sep="")
       files <- list.files(pattern=filePattern)
       
       # make a list that contains all files
@@ -81,7 +81,7 @@ for(cv_s in cv_ss)
       colnames(temp) <- c("cv_s", "cv_t", "cor", "sim", "peak_size", "peak_time", "FES", "major_out")
       
       # add correct simulation numbers
-      temp$sim <- seq(1,200,1)
+      temp$sim <- seq(1,500,1)
       
       # remove all sims with NA values
       temp <- na.omit(temp)
@@ -95,13 +95,13 @@ for(cv_s in cv_ss)
 ## separately get data for homogeneous case (HiS=0, HiT=0) and cases with just HiS or just HiT
 # list of file names
 filePatterns <- c()
-filePatterns[1] <- paste("results_his0hit0cor0g0.1p1000R01.1initI1s*", sep="")
-filePatterns[2] <- paste("results_his0.5hit0cor0g0.1p1000R01.1initI1s*", sep="")
-filePatterns[3] <- paste("results_his1hit0cor0g0.1p1000R01.1initI1s*", sep="")
-filePatterns[4] <- paste("results_his3hit0cor0g0.1p1000R01.1initI1s*", sep="")
-filePatterns[5] <- paste("results_his0hit0.5cor0g0.1p1000R01.1initI1s*", sep="")
-filePatterns[6] <- paste("results_his0hit1cor0g0.1p1000R01.1initI1s*", sep="")
-filePatterns[7] <- paste("results_his0hit3cor0g0.1p1000R01.1initI1s*", sep="")
+filePatterns[1] <- paste("results_his0hit0cor0g0.1p1000R03initI1s*", sep="")
+filePatterns[2] <- paste("results_his0.5hit0cor0g0.1p1000R03initI1s*", sep="")
+filePatterns[3] <- paste("results_his1hit0cor0g0.1p1000R03initI1s*", sep="")
+filePatterns[4] <- paste("results_his3hit0cor0g0.1p1000R03initI1s*", sep="")
+filePatterns[5] <- paste("results_his0hit0.5cor0g0.1p1000R03initI1s*", sep="")
+filePatterns[6] <- paste("results_his0hit1cor0g0.1p1000R03initI1s*", sep="")
+filePatterns[7] <- paste("results_his0hit3cor0g0.1p1000R03initI1s*", sep="")
 
 # levels of heterogeneity
 cv_ss <- c(0,0.5,1,3,0,0,0)
@@ -134,7 +134,7 @@ for(i in 1:7)
   colnames(temp) <- c("cv_s", "cv_t", "cor", "sim", "peak_size", "peak_time", "FES", "major_out")
   
   # add correct simulation numbers
-  temp$sim <- seq(1,200,1)
+  temp$sim <- seq(1,500,1)
   
   # remove all sims with NA values
   temp <- na.omit(temp)
@@ -145,7 +145,9 @@ for(i in 1:7)
 
 
 # check FES for determining major outbreaks
-hist(data_R3_hom[which(data_R3_hom$cv_s == 0 & data_R3_hom$cv_t == 0),]$FES)
+hist(data_R3[which(data_R3$cor == 0),]$FES, ylim=c(0,1000), xlab="Final epidemic size", ylab="Number of epidemics", main="")
+abline(v=200, lty="dashed", col="gray70")
+hist(data_R3_hom[which(data_R3_hom$cv_s == 1),]$FES)
 
 # summarize data for peak size, peak time, and final epidemic size given a major epidemic and probability of a major epidemic
 data_R3_summary <- data_R3 %>% filter(major_out != 0) %>% 
@@ -217,10 +219,10 @@ data_R3_hom_probout$cor <- factor(data_R3_hom_probout$cor, levels = c(-1,-0.5,0,
 ######################### plot results #####################################
 ############################################################################
 #### plot peak size
-peaksize_corn1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -1 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
+peaksize_corn1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -1),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(20,410),  breaks=seq(20,410,26), # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(12,116),  breaks=seq(12,116,8), # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -238,10 +240,10 @@ peaksize_corn1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -1 | data_
 peaksize_corn1 <- set_panel_size( peaksize_corn1, height=unit(3*2, "cm"),
                                   width=unit(3*2, "cm") )
 
-peaksize_corn0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -0.5 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
+peaksize_corn0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -0.5),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(20,410),  breaks=seq(20,410,26), # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(12,116),  breaks=seq(12,116,8), # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -259,10 +261,10 @@ peaksize_corn0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -0.5 | d
 peaksize_corn0.5 <- set_panel_size( peaksize_corn0.5, height=unit(3*2, "cm"),
                                     width=unit(3*2, "cm") )
 
-peaksize_cor0 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
+peaksize_cor0 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(20,410),  breaks=seq(20,410,26), # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(12,116),  breaks=seq(12,116,8), # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -280,10 +282,10 @@ peaksize_cor0 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0 | data_R3
 peaksize_cor0 <- set_panel_size( peaksize_cor0, height=unit(3*2, "cm"),
                                  width=unit(3*2, "cm") )
 
-peaksize_cor0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0.5 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
+peaksize_cor0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0.5),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(20,410),  breaks=seq(20,410,26), # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(12,116),  breaks=seq(12,116,8), # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -301,10 +303,10 @@ peaksize_cor0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0.5 | dat
 peaksize_cor0.5 <- set_panel_size( peaksize_cor0.5, height=unit(3*2, "cm"),
                                    width=unit(3*2, "cm") )
 
-peaksize_cor1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 1 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
+peaksize_cor1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 1),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(20,410),  breaks=seq(20,410,26), # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(12,116),  breaks=seq(12,116,8), # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -325,7 +327,7 @@ peaksize_cor1 <- set_panel_size( peaksize_cor1, height=unit(3*2, "cm"),
 peaksize_cs0 <- ggplot(data_R3_hom_summary[which(data_R3_hom_summary$cv_s == 0 & data_R3_hom_summary$cv_t != 0),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(20,410),  breaks=seq(20,410,26), # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(12,116),  breaks=seq(12,116,8), # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -346,7 +348,7 @@ peaksize_cs0 <- set_panel_size( peaksize_cs0, height=unit(3*2, "cm"),
 peaksize_cs0ct0 <- ggplot(data_R3_hom_summary[which(data_R3_hom_summary$cv_s == 0 & data_R3_hom_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(20,410),  breaks=seq(20,410,26), # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(12,116),  breaks=seq(12,116,8), # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -368,7 +370,7 @@ peaksize_cs0ct0 <- set_panel_size( peaksize_cs0ct0, height=unit(1*2, "cm"),
 peaksize_ct0 <- ggplot(data_R3_hom_summary[which(data_R3_hom_summary$cv_s != 0 & data_R3_hom_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_size)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(20,410),  breaks=seq(20,410,26), # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(12,116),  breaks=seq(12,116,8), # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -391,9 +393,9 @@ peaksize_ct0 <- set_panel_size( peaksize_ct0, height=unit(1*2, "cm"),
 peaksize_leg <- ggplot(data_R3_summary[which(data_R3_summary$cor == "0"),], aes(x=cv_t, y=cv_s, fill=peak_size)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(20,410),  breaks=seq(20,410,26), # R0=3
-                   #scale_fill_steps(low="white", high="red", limits=c(9,117),  breaks=seq(9,117,9), # R0=0.8
-                   #scale_fill_steps(low="white", high="red", limits=c(16,168),  breaks=seq(16,168,19), # R0=1.1
+  #scale_fill_steps(low="white", high="red", limits=c(15,399),  breaks=seq(15,399,24), # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(12,116),  breaks=seq(12,116,8), # R0=0.8
+  #scale_fill_steps(low="white", high="red", limits=c(12,166),  breaks=seq(12,166,14), # R0=1.1
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -422,10 +424,10 @@ plot_grid(plt, legend,
 
 ###############################################################################
 #### plot peak time
-peaktime_corn1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -1 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
+peaktime_corn1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -1),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(8,76),  breaks=seq(8,76,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(16,96),  breaks=seq(16,96,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -443,10 +445,10 @@ peaktime_corn1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -1 | data_
 peaktime_corn1 <- set_panel_size( peaktime_corn1, height=unit(3*2, "cm"),
                                   width=unit(3*2, "cm") )
 
-peaktime_corn0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -0.5 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
+peaktime_corn0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -0.5),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(8,76),  breaks=seq(8,76,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(16,96),  breaks=seq(16,96,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -464,10 +466,10 @@ peaktime_corn0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -0.5 | d
 peaktime_corn0.5 <- set_panel_size( peaktime_corn0.5, height=unit(3*2, "cm"),
                                     width=unit(3*2, "cm") )
 
-peaktime_cor0 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
+peaktime_cor0 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(8,76),  breaks=seq(8,76,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(16,96),  breaks=seq(16,96,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -485,10 +487,10 @@ peaktime_cor0 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0 | data_R3
 peaktime_cor0 <- set_panel_size( peaktime_cor0, height=unit(3*2, "cm"),
                                  width=unit(3*2, "cm") )
 
-peaktime_cor0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0.5 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
+peaktime_cor0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0.5),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(8,76),  breaks=seq(8,76,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(16,96),  breaks=seq(16,96,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -506,10 +508,10 @@ peaktime_cor0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0.5 | dat
 peaktime_cor0.5 <- set_panel_size( peaktime_cor0.5, height=unit(3*2, "cm"),
                                    width=unit(3*2, "cm") )
 
-peaktime_cor1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 1 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
+peaktime_cor1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 1),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(8,76),  breaks=seq(8,76,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(16,96),  breaks=seq(16,96,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -530,7 +532,7 @@ peaktime_cor1 <- set_panel_size( peaktime_cor1, height=unit(3*2, "cm"),
 peaktime_cs0 <- ggplot(data_R3_hom_summary[which(data_R3_hom_summary$cv_s == 0 & data_R3_hom_summary$cv_t != 0),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(8,76),  breaks=seq(8,76,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(16,96),  breaks=seq(16,96,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -551,7 +553,7 @@ peaktime_cs0 <- set_panel_size( peaktime_cs0, height=unit(3*2, "cm"),
 peaktime_cs0ct0 <- ggplot(data_R3_hom_summary[which(data_R3_hom_summary$cv_s == 0 & data_R3_hom_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(8,76),  breaks=seq(8,76,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(16,96),  breaks=seq(16,96,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -573,7 +575,7 @@ peaktime_cs0ct0 <- set_panel_size( peaktime_cs0ct0, height=unit(1*2, "cm"),
 peaktime_ct0 <- ggplot(data_R3_hom_summary[which(data_R3_hom_summary$cv_s != 0 & data_R3_hom_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=peak_time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(8,76),  breaks=seq(8,76,4),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(16,96),  breaks=seq(16,96,8),  # R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -596,9 +598,9 @@ peaktime_ct0 <- set_panel_size( peaktime_ct0, height=unit(1*2, "cm"),
 peaktime_leg <- ggplot(data_R3_summary[which(data_R3_summary$cor == "0"),], aes(x=cv_t, y=cv_s, fill=peak_time)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(8,76),  breaks=seq(8,76,4),  # R0=3
-                   #scale_fill_steps(low="white", high="red", limits=c(17,149),  breaks=seq(17,149,11),  # R0=0.8
-                   #scale_fill_steps(low="white", high="red", limits=c(15,103),  breaks=seq(15,103,8),  # R0=1.1
+  #scale_fill_steps(low="white", high="red", limits=c(8,74),  breaks=seq(8,74,6),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(16,96),  breaks=seq(16,96,8),  # R0=0.8
+  #scale_fill_steps(low="white", high="red", limits=c(15,132),  breaks=seq(15,132,13),  # R0=1.1
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -630,10 +632,10 @@ plot_grid(plt, legend,
 
 ###################################################################################
 #### plot final epidemic size
-FES_corn1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -1 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=FES)) +
+FES_corn1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -1),], aes(x=cv_s, y=cv_t, fill=FES)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(54,890),  breaks=seq(54,890,44),  #R0=3
+  scale_fill_steps(low="white", high="red", limits=c(53,405),  breaks=seq(53,405,32),  #R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -651,10 +653,10 @@ FES_corn1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -1 | data_R3_su
 FES_corn1 <- set_panel_size( FES_corn1, height=unit(3*2, "cm"),
                              width=unit(3*2, "cm") )
 
-FES_corn0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -0.5 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=FES)) +
+FES_corn0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -0.5),], aes(x=cv_s, y=cv_t, fill=FES)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(54,890),  breaks=seq(54,890,44),  #R0=3
+  scale_fill_steps(low="white", high="red", limits=c(53,405),  breaks=seq(53,405,32),  #R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -672,10 +674,10 @@ FES_corn0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == -0.5 | data_R
 FES_corn0.5 <- set_panel_size( FES_corn0.5, height=unit(3*2, "cm"),
                                width=unit(3*2, "cm") )
 
-FES_cor0 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=FES)) +
+FES_cor0 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0),], aes(x=cv_s, y=cv_t, fill=FES)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(54,890),  breaks=seq(54,890,44),  #R0=3
+  scale_fill_steps(low="white", high="red", limits=c(53,405),  breaks=seq(53,405,32),  #R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -693,10 +695,10 @@ FES_cor0 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0 | data_R3_summ
 FES_cor0 <- set_panel_size( FES_cor0, height=unit(3*2, "cm"),
                             width=unit(3*2, "cm") )
 
-FES_cor0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0.5 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=FES)) +
+FES_cor0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0.5),], aes(x=cv_s, y=cv_t, fill=FES)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(54,890),  breaks=seq(54,890,44),  #R0=3
+  scale_fill_steps(low="white", high="red", limits=c(53,405),  breaks=seq(53,405,32),  #R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -714,10 +716,10 @@ FES_cor0.5 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 0.5 | data_R3_
 FES_cor0.5 <- set_panel_size( FES_cor0.5, height=unit(3*2, "cm"),
                               width=unit(3*2, "cm") )
 
-FES_cor1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 1 | data_R3_summary$cv_s == 0 | data_R3_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=FES)) +
+FES_cor1 <- ggplot(data_R3_summary[which(data_R3_summary$cor == 1),], aes(x=cv_s, y=cv_t, fill=FES)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(54,890),  breaks=seq(54,890,44),  #R0=3
+  scale_fill_steps(low="white", high="red", limits=c(53,405),  breaks=seq(53,405,32),  #R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -738,7 +740,7 @@ FES_cor1 <- set_panel_size( FES_cor1, height=unit(3*2, "cm"),
 FES_cs0 <- ggplot(data_R3_hom_summary[which(data_R3_hom_summary$cv_s == 0 & data_R3_hom_summary$cv_t != 0),], aes(x=cv_s, y=cv_t, fill=FES)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(54,890),  breaks=seq(54,890,44),  #R0=3
+  scale_fill_steps(low="white", high="red", limits=c(53,405),  breaks=seq(53,405,32),  #R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -759,7 +761,7 @@ FES_cs0 <- set_panel_size( FES_cs0, height=unit(3*2, "cm"),
 FES_cs0ct0 <- ggplot(data_R3_hom_summary[which(data_R3_hom_summary$cv_s == 0 & data_R3_hom_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=FES)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(54,890),  breaks=seq(54,890,44),  #R0=3
+  scale_fill_steps(low="white", high="red", limits=c(53,405),  breaks=seq(53,405,32),  #R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -781,7 +783,7 @@ FES_cs0ct0 <- set_panel_size( FES_cs0ct0, height=unit(1*2, "cm"),
 FES_ct0 <- ggplot(data_R3_hom_summary[which(data_R3_hom_summary$cv_s != 0 & data_R3_hom_summary$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=FES)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(54,890),  breaks=seq(54,890,44),  #R0=3
+  scale_fill_steps(low="white", high="red", limits=c(53,405),  breaks=seq(53,405,32),  #R0=0.8
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -804,9 +806,9 @@ FES_ct0 <- set_panel_size( FES_ct0, height=unit(1*2, "cm"),
 FES_leg <- ggplot(data_R3_summary[which(data_R3_summary$cor == "0"),], aes(x=cv_t, y=cv_s, fill=FES)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(54,890),  breaks=seq(54,890,44),  #R0=3
-                   #scale_fill_steps(low="white", high="red", limits=c(50,413),  breaks=seq(50,413,33),  #R0=0.8
-                   #scale_fill_steps(low="white", high="red", limits=c(69,569),  breaks=seq(69,569,50),  #R0=1.1
+  #scale_fill_steps(low="white", high="red", limits=c(67,941),  breaks=seq(67,941,46),  #R0=3
+  scale_fill_steps(low="white", high="red", limits=c(53,405),  breaks=seq(53,405,32),  #R0=0.8
+  #scale_fill_steps(low="white", high="red", limits=c(68,552),  breaks=seq(68,552,44),  #R0=1.1
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="gray") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -842,10 +844,10 @@ plot_grid(plt, legend,
 data_R3_probout$major_out <- ifelse(data_R3_probout$major_out==0,NA,data_R3_probout$major_out)
 data_R3_hom_probout$major_out <- ifelse(data_R3_hom_probout$major_out==0,NA,data_R3_hom_probout$major_out)
 
-probout_corn1 <- ggplot(data_R3_probout[which(data_R3_probout$cor == -1 | data_R3_probout$cv_s == 0 | data_R3_probout$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=major_out)) +
+probout_corn1 <- ggplot(data_R3_probout[which(data_R3_probout$cor == -1),], aes(x=cv_s, y=cv_t, fill=major_out)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(0.005,0.705),  breaks=seq(0.005,0.705,0.05),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(0,0.694),  breaks=seq(0.006,0.694,0.043),  # R0=3
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="white") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -863,10 +865,10 @@ probout_corn1 <- ggplot(data_R3_probout[which(data_R3_probout$cor == -1 | data_R
 probout_corn1 <- set_panel_size( probout_corn1, height=unit(3*2, "cm"),
                                  width=unit(3*2, "cm") )
 
-probout_corn0.5 <- ggplot(data_R3_probout[which(data_R3_probout$cor == -0.5 | data_R3_probout$cv_s == 0 | data_R3_probout$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=major_out)) +
+probout_corn0.5 <- ggplot(data_R3_probout[which(data_R3_probout$cor == -0.5),], aes(x=cv_s, y=cv_t, fill=major_out)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(0.005,0.705),  breaks=seq(0.005,0.705,0.05),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(0,0.694),  breaks=seq(0.006,0.694,0.043),  # R0=3
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="white") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -884,10 +886,10 @@ probout_corn0.5 <- ggplot(data_R3_probout[which(data_R3_probout$cor == -0.5 | da
 probout_corn0.5 <- set_panel_size( probout_corn0.5, height=unit(3*2, "cm"),
                                    width=unit(3*2, "cm") )
 
-probout_cor0 <- ggplot(data_R3_probout[which(data_R3_probout$cor == 0 | data_R3_probout$cv_s == 0 | data_R3_probout$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=major_out)) +
+probout_cor0 <- ggplot(data_R3_probout[which(data_R3_probout$cor == 0),], aes(x=cv_s, y=cv_t, fill=major_out)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(0.005,0.705),  breaks=seq(0.005,0.705,0.05),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(0,0.694),  breaks=seq(0.006,0.694,0.043),  # R0=3
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="white") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -905,10 +907,10 @@ probout_cor0 <- ggplot(data_R3_probout[which(data_R3_probout$cor == 0 | data_R3_
 probout_cor0 <- set_panel_size( probout_cor0, height=unit(3*2, "cm"),
                                 width=unit(3*2, "cm") )
 
-probout_cor0.5 <- ggplot(data_R3_probout[which(data_R3_probout$cor == 0.5 | data_R3_probout$cv_s == 0 | data_R3_probout$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=major_out)) +
+probout_cor0.5 <- ggplot(data_R3_probout[which(data_R3_probout$cor == 0.5),], aes(x=cv_s, y=cv_t, fill=major_out)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(0.005,0.705),  breaks=seq(0.005,0.705,0.05),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(0,0.694),  breaks=seq(0.006,0.694,0.043),  # R0=3
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="white") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -926,10 +928,10 @@ probout_cor0.5 <- ggplot(data_R3_probout[which(data_R3_probout$cor == 0.5 | data
 probout_cor0.5 <- set_panel_size( probout_cor0.5, height=unit(3*2, "cm"),
                                   width=unit(3*2, "cm") )
 
-probout_cor1 <- ggplot(data_R3_probout[which(data_R3_probout$cor == 1 | data_R3_probout$cv_s == 0 | data_R3_probout$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=major_out)) +
+probout_cor1 <- ggplot(data_R3_probout[which(data_R3_probout$cor == 1),], aes(x=cv_s, y=cv_t, fill=major_out)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(0.005,0.705),  breaks=seq(0.005,0.705,0.05),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(0,0.694),  breaks=seq(0.006,0.694,0.043),  # R0=3
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="white") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -950,7 +952,7 @@ probout_cor1 <- set_panel_size( probout_cor1, height=unit(3*2, "cm"),
 probout_cs0 <- ggplot(data_R3_hom_probout[which(data_R3_hom_probout$cv_s == 0 & data_R3_hom_probout$cv_t != 0),], aes(x=cv_s, y=cv_t, fill=major_out)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(0.005,0.705),  breaks=seq(0.005,0.705,0.05),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(0,0.694),  breaks=seq(0.006,0.694,0.043),  # R0=3
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="white") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -971,7 +973,7 @@ probout_cs0 <- set_panel_size( probout_cs0, height=unit(3*2, "cm"),
 probout_cs0ct0 <- ggplot(data_R3_hom_probout[which(data_R3_hom_probout$cv_s == 0 & data_R3_hom_probout$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=major_out)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(0.005,0.705),  breaks=seq(0.005,0.705,0.05),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(0,0.694),  breaks=seq(0.006,0.694,0.043),  # R0=3
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="white") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -993,7 +995,7 @@ probout_cs0ct0 <- set_panel_size( probout_cs0ct0, height=unit(1*2, "cm"),
 probout_ct0 <- ggplot(data_R3_hom_probout[which(data_R3_hom_probout$cv_s != 0 & data_R3_hom_probout$cv_t == 0),], aes(x=cv_s, y=cv_t, fill=major_out)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(0.005,0.705),  breaks=seq(0.005,0.705,0.05),  # R0=3
+  scale_fill_steps(low="white", high="red", limits=c(0,0.694),  breaks=seq(0.006,0.694,0.043),  # R0=3
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="white") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +
@@ -1016,9 +1018,9 @@ probout_ct0 <- set_panel_size( probout_ct0, height=unit(1*2, "cm"),
 probout_leg <- ggplot(data_R3_probout[which(data_R3_probout$cor == "0"),], aes(x=cv_t, y=cv_s, fill=major_out)) +
   geom_tile(color="gray40", lwd=1, linetype=1) +
   #scale_fill_gradient(low="white", high="red", breaks=seq(15,365,50)) +
-  scale_fill_steps(low="white", high="red", limits=c(0,0.705),  breaks=seq(0.005,0.705,0.05),  # R0=3
-                   #scale_fill_steps(low="white", high="red", limits=c(0.0,0.25),  breaks=seq(0.005,0.25,0.035),  # R0=0.8
-                   #scale_fill_steps(low="white", high="red", limits=c(0.0,0.335),  breaks=seq(0.005,0.335,0.03),  # R0=1.1
+  scale_fill_steps(low="white", high="red", limits=c(0,0.694),  breaks=seq(0.006,0.694,0.043),  # R0=3
+  #scale_fill_steps(low="white", high="red", limits=c(0.0,0.265),  breaks=seq(0.001,0.265,0.024),  # R0=0.8
+  #scale_fill_steps(low="white", high="red", limits=c(0.0,0.353),  breaks=seq(0.001,0.353,0.032),  # R0=1.1
                    guide=guide_colorbar(frame.colour="gray40", ticks.colour="gray40"), na.value="white") +
   scale_x_discrete(expand=c(0,0)) +
   scale_y_discrete(expand=c(0,0)) +

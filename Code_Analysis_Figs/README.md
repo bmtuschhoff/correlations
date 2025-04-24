@@ -9,3 +9,5 @@ ProbPeakSizePeakTimeFES_HeatMap.R was used to generate the figures for the proba
 TimetoXpercent_HeatMap.R was used to generate the figures for the time at which the epidemic reaches 50% of its final size.
 
 TimeJthInfReff_TimeSeries_HeatMap.R was used to generate the figures for the time to the jth infection, time to the 50th infection, and R effective vs the number of of susceptible individuals.
+
+mpox.R was used to generate the figures for the daily case counts of mpox in New York City from May 19, 2022 to March 8, 2025 and the SEIR dynamics simulated from our model with positive, zero, or negative correlations. The mpox case counts were downloaded on March 17, 2025 from GitHub (https://github.com/nychealth/monkeypox-data) and the New York City mpox information website (https://www.nyc.gov/site/doh/health/health-topics/monkeypox.page).
