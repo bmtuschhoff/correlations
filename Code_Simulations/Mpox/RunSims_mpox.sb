@@ -1,0 +1,47 @@
+#!/bin/bash
+#SBATCH --nodes=1 
+#SBATCH --ntasks=1 
+#SBATCH --mem=4GB 
+#SBATCH --time=48:00:00 
+
+
+module use /storage/icds/RISE/sw8/modules/
+module load r
+#module load gcc
+module load fftw
+
+# go to current working directory
+cd $SLURM_SUBMIT_DIR
+
+
+# run C++ code
+#g++ -o ibmHiST -std=c++11 IBM_SEIR_CorHiST.cpp -lgsl -lgslcblas 
+
+# set params
+pop_size=70180
+birth_size=$((70 * 365 * 4))
+cor_level=1
+cv_t=3
+cv_s=3
+
+for seed in {1..500}
+do
+	# run R script to generate risks and FoIs for gamma dist with cor from copulas
+	Rscript GenRiskFoIs_CorHiST_copula.R $pop_size $cv_s $cv_t $cor_level $seed
+
+	# run R script to generate risks and FoIs for gamma dist with cor from copulas for all "births"
+	Rscript GenRiskFoIs_CorHiST_copulab.R $birth_size $cv_s $cv_t $cor_level $seed
+
+
+	# run epidemic
+	time ./ibmHiST -his -cs $cv_s -hit -ct $cv_t -g 0.071 -e 0.13 -b 70 -d 0.000997 -r 0.52 -p $pop_size -i 19 -s $seed -in risksFoIs_his${cv_s}_hit${cv_t}_cor${cor_level}_p${pop_size}_seed${seed}.txt -inb risksFoIs_births_his${cv_s}_hit${cv_t}_cor${cor_level}_p${birth_size}_seed${seed}.txt -o results_his${cv_s}hit${cv_t}cor${cor_level}g0.071e0.13b70d0.000997p${pop_size}R00.52initE19seed${seed}time.txt
+done
+
+
+
+# #SBATCH --partition=open 
+
+echo done
+
+## exit successfully
+exit 0
